@@ -15,14 +15,22 @@ search_term = st.text_input("Enter a word in English or Hebrew:")
 if search_term:
     search_term = search_term.strip().lower()
 
-    # Try English to Hebrew
-    result = terms.get(search_term.title())
+    # Match any phrase containing the search term
+    matches = []
+    for eng, heb in terms.items():
+        if search_term in eng.lower() or search_term in heb.lower():
+            matches.append((eng, heb))
 
-    # If not found, try Hebrew to English
-    if not result:
-        result = reverse_terms.get(search_term)
+    for heb, eng in reverse_terms.items():
+        if search_term in heb.lower() or search_term in eng.lower():
+            matches.append((eng, heb))
 
-    if result:
-        st.success(f"✅ Translation: {result}")
+    # Remove duplicates
+    matches = list(set(matches))
+
+    if matches:
+        st.success("✅ Matches found:")
+        for eng, heb in sorted(matches):
+            st.write(f"**{eng}** ↔ **{heb}**")
     else:
-        st.error("❌ Term not found in the dictionary.")
+        st.warning("❌ No matches found.")
