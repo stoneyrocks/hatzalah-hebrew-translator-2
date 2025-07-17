@@ -8,7 +8,7 @@ with open("terms_dict.json", "r", encoding="utf-8") as f:
 # Create reverse dictionary for Hebrew to English
 reverse_terms = {v: k for k, v in terms.items()}
 
-st.title("🚑 Ichud Hatzalah [Hebrew to English Terms Translator]")
+st.title("Hatzalah Hebrew to English Terms Translator")
 
 search_term = st.text_input("Enter a word in English or Hebrew:")
 
